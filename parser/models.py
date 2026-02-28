@@ -1,16 +1,16 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, func
+from sqlalchemy import Integer, String, Float, DateTime, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from datetime import datetime
 
-class Base(DeclarativeBase):
-    pass
+from parser.database import Base
 
 class Product(Base):
     __tablename__ = "products"
 
-    id: mapped_column(Integer, primary_key=True)
-    wb_id: mapped_column(Integer, unique=True)
-    name: mapped_column(String)
-    price: mapped_column(Float)
-    price_old: mapped_column(Float)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    wb_id: Mapped[int] = mapped_column(Integer, unique=True, index=True)
+    name: Mapped[str] = mapped_column(String)
+    price: Mapped[float] = mapped_column(Float)
+    price_old: Mapped[float] = mapped_column(Float)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+    update_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
